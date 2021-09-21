@@ -12,6 +12,12 @@ import java.util.List;
 
 @Controller
 public class CarController {
+    private final CarService carService;
+
+    public CarController(CarService carService) {
+        this.carService = carService;
+    }
+
     @GetMapping("/cars")
     public String showCars(ModelMap model, @RequestParam(value = "count", defaultValue = "5") int sumCars) {
 
@@ -22,8 +28,8 @@ public class CarController {
         messages.add(new Car("Renault", "Arkana", 2021));
         messages.add(new Car("BMW", "X6", 2016));
 
-        messages = CarService.getCars(messages, sumCars);
-        model.addAttribute("messages", messages.toString());
+        messages = carService.getCars(messages, sumCars);
+        model.addAttribute("messages", messages);
         return "index";
     }
 }
